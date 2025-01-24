@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { baseURL } from "./userSlice";
 
 const projectSlice = createSlice({
   name: "project",
@@ -87,10 +88,9 @@ const projectSlice = createSlice({
 export const getAllProjects = () => async (dispatch) => {
   dispatch(projectSlice.actions.getAllProjectsRequest());
   try {
-    const response = await axios.get(
-      "http://localhost:4000/api/v1/project/getall",
-      { withCredentials: true }
-    );
+    const response = await axios.get(`${baseURL}/api/v1/project/getall`, {
+      withCredentials: true,
+    });
     dispatch(
       projectSlice.actions.getAllProjectsSuccess(response.data.projects)
     );
@@ -105,19 +105,15 @@ export const getAllProjects = () => async (dispatch) => {
 export const addNewProject = (data) => async (dispatch) => {
   dispatch(projectSlice.actions.addNewProjectRequest());
   try {
-    const response = await axios.post(
-      "http://localhost:4000/api/v1/project/add",
-      data,
-      {
-        withCredentials: true,
-        headers: { "Content-Type": "multipart/form-data" },
-      }
-    );
+    const response = await axios.post(`${baseURL}/api/v1/project/add`, data, {
+      withCredentials: true,
+      headers: { "Content-Type": "multipart/form-data" },
+    });
     dispatch(projectSlice.actions.addNewProjectSuccess(response.data.message));
     dispatch(projectSlice.actions.clearAllErrors());
   } catch (error) {
     dispatch(
-      projectSlice.actions.addNewProjectFailed(error.response.data.message)
+      projectSlice.actions.addNewProjectFailed(error?.response?.data?.message)
     );
   }
 };
@@ -125,7 +121,7 @@ export const deleteProject = (id) => async (dispatch) => {
   dispatch(projectSlice.actions.deleteProjectRequest());
   try {
     const response = await axios.delete(
-      `http://localhost:4000/api/v1/project/delete/${id}`,
+      `${baseURL}/api/v1/project/delete/${id}`,
       {
         withCredentials: true,
       }
@@ -134,7 +130,7 @@ export const deleteProject = (id) => async (dispatch) => {
     dispatch(projectSlice.actions.clearAllErrors());
   } catch (error) {
     dispatch(
-      projectSlice.actions.deleteProjectFailed(error.response.data.message)
+      projectSlice.actions.deleteProjectFailed(error?.response?.data?.message)
     );
   }
 };
@@ -142,7 +138,7 @@ export const updateProject = (id, newData) => async (dispatch) => {
   dispatch(projectSlice.actions.updateProjectRequest());
   try {
     const response = await axios.put(
-      `http://localhost:4000/api/v1/project/update/${id}`,
+      `${baseURL}/api/v1/project/update/${id}`,
       newData,
       {
         withCredentials: true,
@@ -154,7 +150,7 @@ export const updateProject = (id, newData) => async (dispatch) => {
   } catch (error) {
     console.log(error);
     dispatch(
-      projectSlice.actions.updateProjectFailed(error.response.data.message)
+      projectSlice.actions.updateProjectFailed(error?.response?.data?.message)
     );
   }
 };
