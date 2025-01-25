@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const baseURL = "https://portfolio-2-4f3c.onrender.com";
+export const baseURL = "http://localhost:4000";
 
 const userSlice = createSlice({
   name: "user",
@@ -147,10 +147,10 @@ export const logout = () => async (dispatch) => {
     const { data } = await axios.get(`${baseURL}/api/v1/user/logout`, {
       withCredentials: true,
     });
-    dispatch(userSlice.actions.logoutSuccess(data.message));
+    dispatch(userSlice.actions.logoutSuccess(data?.message));
     dispatch(userSlice.actions.clearAllErrors());
   } catch (error) {
-    dispatch(userSlice.actions.logoutFailed(error.response.data.message));
+    dispatch(userSlice.actions.logoutFailed(error?.response?.data?.message));
   }
 };
 
@@ -171,7 +171,7 @@ export const updatePassword =
       dispatch(userSlice.actions.clearAllErrors());
     } catch (error) {
       dispatch(
-        userSlice.actions.updatePasswordFailed(error.response.data.message)
+        userSlice.actions.updatePasswordFailed(error?.response?.data?.message)
       );
     }
   };
@@ -188,11 +188,11 @@ export const updateProfile = (data) => async (dispatch) => {
         headers: { "Content-Type": "multipart/form-data" },
       }
     );
-    dispatch(userSlice.actions.updateProfileSuccess(response.data.message));
+    dispatch(userSlice.actions.updateProfileSuccess(response?.data?.message));
     dispatch(userSlice.actions.clearAllErrors());
   } catch (error) {
     dispatch(
-      userSlice.actions.updateProfileFailed(error.response.data.message)
+      userSlice.actions.updateProfileFailed(error?.response?.data?.message)
     );
   }
 };

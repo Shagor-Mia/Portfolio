@@ -3,16 +3,16 @@ import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { baseURL } from "./Hero";
 
 const Portfolio = () => {
   const [viewAll, setViewAll] = useState(false);
   const [projects, setProjects] = useState([]);
   useEffect(() => {
     const getMyProjects = async () => {
-      const { data } = await axios.get(
-        "http://localhost:4000/api/v1/project/getall",
-        { withCredentials: true }
-      );
+      const { data } = await axios.get(`${baseURL}/api/v1/project/getall`, {
+        withCredentials: true,
+      });
       setProjects(data.projects);
     };
     getMyProjects();

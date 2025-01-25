@@ -12,14 +12,15 @@ import { Typewriter } from "react-simple-typewriter";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 
+export const baseURL = "https://portfolio-2-4f3c.onrender.com";
+
 const Hero = () => {
   const [user, setUser] = useState({});
   useEffect(() => {
     const getMyProfile = async () => {
-      const { data } = await axios.get(
-        "http://localhost:4000/api/v1/user/portfolio/me",
-        { withCredentials: true }
-      );
+      const { data } = await axios.get(`${baseURL}/api/v1/user/portfolio/me`, {
+        withCredentials: true,
+      });
       setUser(data.user);
     };
     getMyProfile();

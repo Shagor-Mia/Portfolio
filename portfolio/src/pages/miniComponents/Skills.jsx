@@ -1,15 +1,15 @@
 import { Card } from "@/components/ui/card";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { baseURL } from "./Hero";
 
 const Skills = () => {
   const [skills, setSkills] = useState([]);
   useEffect(() => {
     const getMySkills = async () => {
-      const { data } = await axios.get(
-        "http://localhost:4000/api/v1/skill/getall",
-        { withCredentials: true }
-      );
+      const { data } = await axios.get(`${baseURL}/api/v1/skill/getall`, {
+        withCredentials: true,
+      });
       setSkills(data.skills);
     };
     getMySkills();

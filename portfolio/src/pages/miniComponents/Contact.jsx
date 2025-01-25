@@ -4,6 +4,7 @@ import { Label } from "@/components/ui/label";
 import axios from "axios";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { baseURL } from "./Hero";
 
 const Contact = () => {
   const [senderName, setSenderName] = useState("");
@@ -15,7 +16,7 @@ const Contact = () => {
     setLoading(true);
     await axios
       .post(
-        "http://localhost:4000/api/v1/message/send",
+        `${baseURL}/api/v1/message/send`,
         { senderName, subject, message },
         {
           withCredentials: true,
